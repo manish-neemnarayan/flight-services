@@ -6,14 +6,17 @@ const airplane = new AirplaneRepository();
 
 async function airplaneCreate(data) {
     try {
-        console.log("entered in service after controller")
         const response = await airplane.create(data);
         return response
     } catch (error) {
-        if(error.name === 'TypeError') {
-            throw new AppError("error while creating air", StatusCodes.INTERNAL_SERVER_ERROR)
+        let explanation = [];
+        if(error.name === 'SequelizeValidationError') {
+            Array.from(error.errors).forEach(err => {
+                explanation.push(err?.message);
+            }); 
+            throw new AppError(explanation, StatusCodes.BAD_REQUEST)
         }
-        // throw error;
+        throw new AppError("error while creating air", StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
 

@@ -6,8 +6,7 @@ class CrudRepository {
     }
 
     async create(data) {
-        console.log("entered in crud")
-            const response = await this.model.creat(data);
+            const response = await this.model.create(data);
             return response;
    }
 
