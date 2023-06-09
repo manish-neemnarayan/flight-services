@@ -1,5 +1,3 @@
-const {Logger} = require("../config");
-
 class CrudRepository {
     constructor(model) {
         this.model = model;
@@ -11,44 +9,27 @@ class CrudRepository {
    }
 
     async destroy(data) {
-        try {
-            const response = await this.model.destroy({
-                where: {
-                    id : data
-                }
-            });
-            return response;
-        } catch (error) {
-            Logger.error("something went wrong in the Crud Repo : Destroy");
-            throw new Error(error);
-
-        }
+        const response = await this.model.destroy({
+            where: {
+                id : data
+            }
+        });
+        return response;
     }    
 
     async getAll() {
-        try {
-            const response = await this.model.findAll();
-            return response;
-        } catch (error) {
-            Logger.error("something went wrong in the Crud Repo : get");
-            throw new Error(error);
-
-        }
+        const response = await this.model.findAll();
+        return response;
     }
 
     async update(id, data) {
-        try {
-            const response = await this.model.update(data, {
-                where: {
-                    id : id
-                }
-            });
-            return response;
-        } catch (error) {
-            Logger.error("something went wrong in the Crud Repo : update");
-            throw new Error(error);
+        const response = await this.model.update(data, {
+            where: {
+                id : id
+            }
+        });
+        return response;
 
-        }
     }    
 }
 
