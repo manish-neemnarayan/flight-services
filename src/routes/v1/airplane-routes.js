@@ -13,7 +13,10 @@ router.get('/',
 router.get('/:id',
             AirplaneController.getOneAirplane);
 
-router.patch('/',
+router.patch('/:id',
               AirplaneController.updateAirplane);
+
+router.delete('/:id',
+              AirplaneController.deleteAirplane);          
 
 module.exports = router;

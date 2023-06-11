@@ -69,12 +69,35 @@ async function getOneAirplane(req, res) {
  */
 async function updateAirplane(req, res) {
     try {
-        const airplane_id = req.query.id;
-        const updatedAirplane = await AirplaneService.airplaneUpdate(airplane_id, req.body);
+        const airplane_id = req.params.id;
 
+        const updatedAirplane = await AirplaneService.airplaneUpdate(airplane_id, req.body);
+        SuccessResponse.data = updatedAirplane;
         return res  
                 .status(StatusCodes.OK)
-                .json(updatedAirplane)
+                .json(SuccessResponse)
+    } catch (error) {
+        ErrorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponse)
+    }
+}
+
+/**
+ * Delete: /airplanes/:id
+ */
+
+// TODO:Add the Mltiple Delete functionality
+
+async function deleteAirplane(req, res) {
+    try {
+        const airplane_id = req.params.id;
+        const deleteAirplane = await AirplaneService.airplaneDelete(airplane_id);
+        SuccessResponse.data = deleteAirplane;
+        return res  
+                .status(StatusCodes.OK)
+                .json(SuccessResponse)
     } catch (error) {
         ErrorResponse.error = error;
         return res
@@ -87,5 +110,6 @@ module.exports = {
     createAirplane,
     getAirplanes,
     updateAirplane,
-    getOneAirplane
+    getOneAirplane,
+    deleteAirplane
 }

@@ -17,6 +17,9 @@ class CrudRepository {
                 id : id
             }
         });
+        if(!response) {
+            throw new AppError("Requested data is not found", StatusCodes.NOT_FOUND);
+        };
         return response;
     }    
 
@@ -39,6 +42,10 @@ class CrudRepository {
                 id : id
             }
         });
+        if (response.length === 1 && response[0] === 0) {
+            throw new AppError("Requested data is not found", StatusCodes.NOT_FOUND);
+        }
+     
         return response;
 
     }    

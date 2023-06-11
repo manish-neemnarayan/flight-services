@@ -47,9 +47,19 @@ async function airplaneGet(id) {
 // update airplane
 async function airplaneUpdate(id, data) {
     try {
+        if(Object.keys(data).length === 0) {
+            throw new AppError("Specify the data correctly", StatusCodes.BAD_REQUEST);
+        }
         const response = await airplane.update(id, data);
         return response;
     } catch (error) {
+        console.log(error)
+        if(error.statusCode == StatusCodes.BAD_REQUEST) {
+            throw error;
+        }
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError("Airplane you requested to update is not found", error.statusCode);
+        }
         throw new AppError("Error while Updating Airplane", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
@@ -60,7 +70,9 @@ async function airplaneDelete(id) {
         const response = await airplane.destroy(id);
         return response;
     } catch (error) {
-        
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError("Airplane you requested to delete is not found", error.statusCode);
+        }
     }
 }
 
