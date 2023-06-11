@@ -4,6 +4,7 @@ const { AppError } = require("../utils/errors");
 
 const airplane = new AirplaneRepository();
 
+// create airplane
 async function airplaneCreate(data) {
     try {
         const response = await airplane.create(data);
@@ -21,7 +22,7 @@ async function airplaneCreate(data) {
 }
 
 // get ariplanes
-async function airplaneGet() {
+async function airplaneGetAll() {
     try {
         const response = await airplane.getAll();
         return response;
@@ -30,7 +31,43 @@ async function airplaneGet() {
     }
 }
 
+// get one airplane based on id
+async function airplaneGet(id) {
+    try {
+        const response = await airplane.getOne(id);
+        return response;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError("Airplane you requested is not found", error.statusCode);
+        }
+        throw new AppError("Error while fetching Airplane", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+// update airplane
+async function airplaneUpdate(id, data) {
+    try {
+        const response = await airplane.update(id, data);
+        return response;
+    } catch (error) {
+        throw new AppError("Error while Updating Airplane", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+// delete airplane
+async function airplaneDelete(id) {
+    try {
+        const response = await airplane.destroy(id);
+        return response;
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     airplaneCreate,
-    airplaneGet
+    airplaneGet,
+    airplaneUpdate,
+    airplaneGetAll,
+    airplaneDelete
 };

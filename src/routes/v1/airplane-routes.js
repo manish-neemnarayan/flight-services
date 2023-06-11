@@ -9,5 +9,11 @@ router.post('/',
 
 router.get('/',
             AirplaneController.getAirplanes);
+        
+router.get('/:id',
+            AirplaneController.getOneAirplane);
+
+router.patch('/',
+              AirplaneController.updateAirplane);
 
 module.exports = router;
