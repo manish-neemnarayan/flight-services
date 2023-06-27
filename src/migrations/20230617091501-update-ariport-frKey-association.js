@@ -9,10 +9,11 @@ module.exports = {
       name: 'city_fkey_constraint',
       references: { 
         table: 'cities',
-        field: 'id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+        field: 'id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+      }
+
     });
   },
 
