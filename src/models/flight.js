@@ -11,18 +11,67 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Flight.belongsTo(models.Airplane, {
+        foreignKey: 'airplaneId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
+      Flight.belongsTo(models.Airport, {
+        foreignKey: 'departureAirportId',
+        as: 'departureAirport',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
+      Flight.belongsTo(models.Airport, {
+        foreignKey: 'arrivalAirportId',
+        as: 'arrivalAirport',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   }
   Flight.init({
-    flightNumber: DataTypes.STRING,
-    airplaneId: DataTypes.INTEGER,
-    departureAirportId: DataTypes.STRING,
-    arrivalAirportId: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    arrivalTime: DataTypes.DATE,
-    departureTime: DataTypes.DATE,
-    boardingGate: DataTypes.STRING,
-    totalSeats: DataTypes.INTEGER
+    flightNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    airplaneId: {
+      // foreign key constraint associations
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    departureAirportId:{
+      // foreign key constraint associations
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    arrivalAirportId: {
+      // foreign key constraint associations
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    arrivalTime: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    departureTime: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    boardingGate: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    totalSeats: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Flight',
