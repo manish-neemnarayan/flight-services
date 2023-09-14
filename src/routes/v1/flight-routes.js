@@ -8,4 +8,6 @@ router.post("/",
                 FlightMiddleware.validCreateResponse,
                 FlightController.createFlight);       
 
+router.get("/", FlightController.getAllFlights);
+router.get("/getty", FlightController.flightGetAll);
 module.exports = router;
