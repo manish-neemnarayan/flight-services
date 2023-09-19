@@ -42,12 +42,13 @@ async function flightGetAll() {
 // get airplane
 async function getAllFlights(query) {
   let customFilter = {};
-  let endingTripTime = "23:59:00";
-  // trips=
+  let sortFilter = [];
+  let endingTripTime = " 23:59:00";
+  // trips=DEL-HSR
   if (query.trips) {
     let [departureAirportId, arrivalAirportId] = query.trips.split("-");
     customFilter.departureAirportId = departureAirportId;
-    customFilter.arrivalAirportId = arrivalAirportId;
+    customFilter.arrivalAirportId = arrivalAirportId; 
     // TODO: check if they are not same
   }
 
@@ -73,9 +74,19 @@ async function getAllFlights(query) {
     };
   }
 
+  //sort
+  if(query.sort) {
+    // query --> departureTime_ASC,price_ASC
+    const params =  query.sort.split(",")
+    console.log(params)
+    const sortFilters = params.map(item => item.split("_"));
+    sortFilter = sortFilters;
+  }
+
   try {
     console.log(customFilter);
-    const response = await flight.getAllFlights(customFilter);
+    console.log(sortFilter)
+    const response = await flight.getAllFlights(customFilter, sortFilter);
     return response;
   } catch (error) {
     let explanation = [];

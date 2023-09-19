@@ -10,7 +10,7 @@ class FlightRepository extends CrudRepository {
         console.log(filter);
         const response = await Flight.findAll({
             where: filter,
-            // order: sort
+            order: sort
         });
 
         return response;

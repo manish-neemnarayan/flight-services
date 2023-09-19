@@ -13,12 +13,12 @@ async function createFlight(req, res) {
         const flight = await FlightService.flightCreate({
             flightNumber: req.body.flightNumber,
             airplaneId: req.body.airplaneId,
-            departureAirportId: req.body.departureAirportId,
+            departureAirportId: req.body.departureAirportId,  
             arrivalAirportId: req.body.arrivalAirportId,
             price: req.body.price,
             arrivalTime: req.body.arrivalTime,
             departureTime: req.body.departureTime,
-            boardingGate: req.body.boardingGate,
+            boardingGate: req.body.boardingGate, 
             totalSeats: req.body.totalSeats
         });
         SuccessResponse.data = flight;
