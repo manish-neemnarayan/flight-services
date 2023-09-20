@@ -96,6 +96,7 @@ async function getAllFlights(query) {
       });
       throw new AppError(explanation, StatusCodes.BAD_REQUEST);
     }
+    console.log(error)
     throw new AppError(
       ["error while getting flight", error.parent],
       StatusCodes.INTERNAL_SERVER_ERROR
