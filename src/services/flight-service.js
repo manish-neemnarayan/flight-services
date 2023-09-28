@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 
 const flight = new FlightRepository();
 
-// create airplane
+// create flight
 async function flightCreate(data) {
   try {
     const response = await flight.create(data);
@@ -25,21 +25,7 @@ async function flightCreate(data) {
   }
 }
 
-//get all airplane
-async function flightGetAll() {
-  try {
-    const response = await flight.getAll();
-    return response;
-  } catch (error) {
-    console.log(error);
-    throw new AppError(
-      "Error while Fetching flights",
-      StatusCodes.INTERNAL_SERVER_ERROR
-    );
-  }
-}
-
-// get airplane
+// get all flights 
 async function getAllFlights(query) {
   let customFilter = {};
   let sortFilter = [];
@@ -102,10 +88,23 @@ async function getAllFlights(query) {
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
+} 
+
+// get flight
+async function getFlight(id) {
+  try {
+      const response = await flight.getOne(id);
+      return response;
+  } catch (error) {
+      if(error.statusCode == StatusCodes.NOT_FOUND) {
+          throw new AppError("Flight you requested is not found", error.statusCode);
+      }
+      throw new AppError("Error while fetching Flight", StatusCodes.INTERNAL_SERVER_ERROR);
+  }
 }
 
-module.exports = {
+module.exports = {  
   flightCreate,
   getAllFlights,
-  flightGetAll,
+  getFlight
 };

@@ -3,11 +3,15 @@ const { FlightController } = require("../../controllers");
 const { FlightMiddleware } = require("../../middlewares");
 const router = express.Router();
 
-// post : city/
+// post : http://localhost:4000/api/v1/flight/
 router.post("/",
                 FlightMiddleware.validCreateResponse,
                 FlightController.createFlight);       
 
+// get : http://localhost:4000/api/v1/flight/?price=100-10000
 router.get("/", FlightController.getAllFlights);
-router.get("/getty", FlightController.flightGetAll);
+
+// get : http://localhost:4000/api/v1/flight/:id
+router.get("/:id", FlightController.getFlight);
+
 module.exports = router;

@@ -3,7 +3,7 @@ const {FlightService} = require("../services");
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
 
 /**
- * POST : /airports
+ * POST : /flight
  * req-body
  */
 
@@ -33,7 +33,7 @@ async function createFlight(req, res) {
     }
 }
 
-// GET: /ariports
+// GET: /flight/:id
 async function getAllFlights(req, res) {
     try {
         const query = req.query;
@@ -50,12 +50,11 @@ async function getAllFlights(req, res) {
     }
 }
 
-async function flightGetAll(_req, res) {
+async function getFlight(req, res) {
     try {
-        const flights = await FlightService.flightGetAll();
-        SuccessResponse.data = flights;
-
-        return res
+        const flight = await FlightService.getFlight(req.params.id);
+        SuccessResponse.data = flight;
+        return res  
                 .status(StatusCodes.OK)
                 .json(SuccessResponse)
     } catch (error) {
@@ -69,5 +68,5 @@ async function flightGetAll(_req, res) {
 module.exports = {
     createFlight,
     getAllFlights,
-    flightGetAll
+    getFlight
 }
