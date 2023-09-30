@@ -70,4 +70,16 @@ const validCreateResponse = function(req, res, next) {
     next();
 } 
 
-module.exports = {validCreateResponse};
+function validateUpdateSeatsRequest(req, res, next) {
+    if(!req.body.seats) {
+        ErrorResponse.message = "Error while creating the flight";
+        ErrorResponse.error = new AppError(["Seats not found in the incoming request in the correct format"], StatusCodes.BAD_REQUEST);
+        return res
+                .status(ErrorResponse.error.statusCode)
+                .json(ErrorResponse)
+    }
+
+    next();
+}
+
+module.exports = {validCreateResponse, validateUpdateSeatsRequest};
